@@ -5,13 +5,12 @@
 // See LICENSE for license information.
 //
 
-
 import SwiftUI
 internal import UniformTypeIdentifiers
 
 struct CsvImporterModifier: ViewModifier {
     @Binding var isPresented: Bool
-    @Binding var statistics: [Statistic]
+    @Binding var sessions: [Session]
 
     func body(content: Content) -> some View {
         content
@@ -33,8 +32,8 @@ struct CsvImporterModifier: ViewModifier {
                         let text = try String(contentsOf: url, encoding: .utf8)
                         let parsed = text
                             .split(separator: "\n")
-                            .compactMap { Statistic(csv: String($0)) }
-                        statistics = parsed
+                            .compactMap { Session(csv: String($0)) }
+                        sessions = parsed
                     } catch {
                         print("CSV import failed:", error)
                     }
@@ -44,8 +43,7 @@ struct CsvImporterModifier: ViewModifier {
 }
 
 extension View {
-    func csvImporter(isPresented: Binding<Bool>, statistics: Binding<[Statistic]>) -> some View {
-        self.modifier(CsvImporterModifier(isPresented: isPresented, statistics: statistics))
+    func csvImporter(isPresented: Binding<Bool>, sessions: Binding<[Session]>) -> some View {
+        self.modifier(CsvImporterModifier(isPresented: isPresented, sessions: sessions))
     }
 }
-
