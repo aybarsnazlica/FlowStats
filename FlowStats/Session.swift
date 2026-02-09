@@ -1,5 +1,5 @@
 //
-// Statistic.swift
+// Session.swift
 // FlowStats
 // https://www.github.com/aybarsnazlica/FlowStats
 // See LICENSE for license information.
@@ -14,10 +14,10 @@ struct Session: Identifiable {
     let completed: Date
 
     private static let formatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        f.locale = Locale(identifier: "en_US_POSIX")
-        return f
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
     }()
 
     init?(csv: String) {
@@ -28,6 +28,8 @@ struct Session: Identifiable {
         else { return nil }
 
         self.name = fields[0]
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .trimmingCharacters(in: CharacterSet(charactersIn: "\""))
         self.started = started
         self.completed = completed
     }
