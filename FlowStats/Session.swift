@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct Statistic: Identifiable {
+struct Session: Identifiable {
     let id = UUID()
-    let session: String
+    let name: String
     let started: Date
     let completed: Date
 
@@ -27,7 +27,7 @@ struct Statistic: Identifiable {
               let completed = Self.formatter.date(from: fields[2])
         else { return nil }
 
-        self.session = fields[0]
+        self.name = fields[0]
         self.started = started
         self.completed = completed
     }
