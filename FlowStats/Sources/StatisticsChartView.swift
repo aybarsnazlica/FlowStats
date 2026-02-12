@@ -22,9 +22,14 @@ struct StatisticsChartView: View {
             ForEach(data) { statistic in
                 BarMark(
                     x: .value("Name", statistic.name),
-                    y: .value("Count", statistic.count))
+                    y: .value("Count", statistic.count)
+                )
+                .foregroundStyle(by: .value("Name", statistic.name))
+                .cornerRadius(5)
+                .opacity(0.8)
             }
         }
+        .chartLegend(.hidden)
         .chartYAxis {
             AxisMarks(values: .automatic(desiredCount: 20))
         }
