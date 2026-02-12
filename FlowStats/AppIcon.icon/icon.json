@@ -19,16 +19,38 @@
     {
       "layers" : [
         {
+          "fill" : "automatic",
+          "image-name" : "2 – Layer.svg",
+          "name" : "2 – Layer",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              -66
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "layers" : [
+        {
           "blend-mode" : "normal",
-          "fill" : {
-            "solid" : "extended-gray:1.00000,1.00000"
-          },
+          "fill" : "automatic",
           "hidden" : false,
           "image-name" : "1 – Layer.svg",
           "name" : "1 – Layer",
           "opacity" : 0.75,
           "position" : {
-            "scale" : 0.8,
+            "scale" : 0.9,
             "translation-in-points" : [
               0,
               0
