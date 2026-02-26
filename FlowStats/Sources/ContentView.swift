@@ -17,25 +17,25 @@ struct ContentView: View {
     }
 
     var body: some View {
-            VStack {
-                Button("Open CSV") {
-                    showImporter = true
-                }
-                .padding()
+        VStack {
+            Button("Open CSV") {
+                showImporter = true
+            }
+            .padding()
 
-                TabView(selection: $selectedTab) {
-                    Tab("This Week", systemImage: "calendar", value: .thisWeek) {
-                        StatisticsChartView(data: selectedStats)
-                    }
-                    
-                    Tab("Last Week", systemImage: "calendar.badge.clock", value: .lastWeek) {
-                        StatisticsChartView(data: selectedStats)
-                    }
-
-                    Tab("All Time", systemImage: "infinity", value: .allTime) {
-                        StatisticsChartView(data: selectedStats)
-                    }
+            TabView(selection: $selectedTab) {
+                Tab("This Week", systemImage: "calendar", value: .thisWeek) {
+                    StatisticsChartView(data: selectedStats)
                 }
+
+                Tab("Last Week", systemImage: "calendar.badge.clock", value: .lastWeek) {
+                    StatisticsChartView(data: selectedStats)
+                }
+
+                Tab("All Time", systemImage: "infinity", value: .allTime) {
+                    StatisticsChartView(data: selectedStats)
+                }
+            }
         }
         .csvImporter(isPresented: $showImporter, sessions: $sessions)
     }
