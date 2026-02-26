@@ -8,12 +8,15 @@
 import Foundation
 
 enum Tabs: Equatable, Hashable {
+    case home
     case thisWeek
     case lastWeek
     case allTime
 
     var range: Range<Date>? {
         switch self {
+        case .home:
+            return nil
         case .thisWeek:
             return StatsRange.thisWeek.range
         case .lastWeek:

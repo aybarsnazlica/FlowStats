@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var sessions = [Session]()
     @State private var showImporter = false
-    @State private var selectedTab: Tabs = .thisWeek
+    @State private var selectedTab: Tabs = .home
 
     private var selectedStats: [StatisticCount] {
         return countSessions(data: sessions, range: selectedTab.range)
@@ -19,14 +19,23 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if sessions.isEmpty {
-                    Button("Open CSV") {
-                        showImporter = true
-                    }
-                    .padding()
-                }
-
                 TabView(selection: $selectedTab) {
+                    Tab("Home", systemImage: "house", value: .home) {
+                        VStack(spacing: 12) {
+                            Button("Open CSV") {
+                                showImporter = true
+                            }
+                            .padding()
+
+                            if sessions.isEmpty {
+                                Text("Import a CSV to view charts.")
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                Text("CSV loaded. Use the tabs to view charts.")
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
                     Tab("This Week", systemImage: "calendar", value: .thisWeek) {
                         StatisticsChartView(data: selectedStats)
                     }
