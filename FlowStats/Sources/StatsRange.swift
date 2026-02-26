@@ -12,19 +12,15 @@ enum StatsRange {
 
     var range: Range<Date>? {
         let calendar = Calendar.current
+        let startOfThisWeek = calendar.date(
+            from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())
+        )!
 
         switch self {
         case .thisWeek:
-            let startOfWeek = calendar.date(
-                from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())
-            )!
-            let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
-            return startOfWeek..<endOfWeek
+            let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfThisWeek)!
+            return startOfThisWeek..<endOfWeek
         case .lastWeek:
-            let startOfWeek = calendar.date(
-                from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())
-            )!
-            let startOfThisWeek = startOfWeek
             let startOfLastWeek = calendar.date(byAdding: .day, value: -7, to: startOfThisWeek)!
             return startOfLastWeek..<startOfThisWeek
         case .allTime:
