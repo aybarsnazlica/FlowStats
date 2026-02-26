@@ -34,9 +34,15 @@ struct CsvImporterModifier: ViewModifier {
                             text
                             .split(separator: "\n")
                             .compactMap { Session(csv: String($0)) }
-                        sessions = parsed
+                        await MainActor.run {
+                            sessions = parsed
+                        }
                     } catch {
                         print("CSV import failed:", error)
+                    }
+
+                    await MainActor.run {
+                        isPresented = false
                     }
                 }
             }

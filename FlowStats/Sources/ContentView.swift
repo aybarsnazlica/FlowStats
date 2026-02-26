@@ -17,27 +17,32 @@ struct ContentView: View {
     }
 
     var body: some View {
-        VStack {
-            Button("Open CSV") {
-                showImporter = true
+        NavigationStack {
+            VStack {
+                if sessions.isEmpty {
+                    Button("Open CSV") {
+                        showImporter = true
+                    }
+                    .padding()
+                }
+
+                TabView(selection: $selectedTab) {
+                    Tab("This Week", systemImage: "calendar", value: .thisWeek) {
+                        StatisticsChartView(data: selectedStats)
+                    }
+
+                    Tab("Last Week", systemImage: "calendar.badge.clock", value: .lastWeek) {
+                        StatisticsChartView(data: selectedStats)
+                    }
+
+                    Tab("All Time", systemImage: "infinity", value: .allTime) {
+                        StatisticsChartView(data: selectedStats)
+                    }
+                }
             }
-            .padding()
-
-            TabView(selection: $selectedTab) {
-                Tab("This Week", systemImage: "calendar", value: .thisWeek) {
-                    StatisticsChartView(data: selectedStats)
-                }
-
-                Tab("Last Week", systemImage: "calendar.badge.clock", value: .lastWeek) {
-                    StatisticsChartView(data: selectedStats)
-                }
-
-                Tab("All Time", systemImage: "infinity", value: .allTime) {
-                    StatisticsChartView(data: selectedStats)
-                }
-            }
+            .navigationTitle("Flow Stats")
+            .csvImporter(isPresented: $showImporter, sessions: $sessions)
         }
-        .csvImporter(isPresented: $showImporter, sessions: $sessions)
     }
 
     func countSessions(
