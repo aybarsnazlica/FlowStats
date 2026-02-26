@@ -10,28 +10,32 @@ import SwiftUI
 struct ContentView: View {
     @State private var sessions = [Session]()
     @State private var showImporter = false
+    @State private var selectedTab: Tabs = .thisWeek
 
-    var result: [StatisticCount] {
-        let calendar = Calendar.current
-        let startOfWeek = calendar.date(
-            from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())
-        )!
-
-        let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
-
-        return countSessions(data: sessions, range: startOfWeek..<endOfWeek)
+    private var selectedStats: [StatisticCount] {
+        return countSessions(data: sessions, range: selectedTab.range)
     }
 
     var body: some View {
-        NavigationStack {
             VStack {
                 Button("Open CSV") {
                     showImporter = true
                 }
+                .padding()
 
-                StatisticsChartView(data: result)
-            }
-            .navigationTitle("Flow Stats")
+                TabView(selection: $selectedTab) {
+                    Tab("This Week", systemImage: "calendar", value: .thisWeek) {
+                        StatisticsChartView(data: selectedStats)
+                    }
+                    
+                    Tab("Last Week", systemImage: "calendar.badge.clock", value: .lastWeek) {
+                        StatisticsChartView(data: selectedStats)
+                    }
+
+                    Tab("All Time", systemImage: "infinity", value: .allTime) {
+                        StatisticsChartView(data: selectedStats)
+                    }
+                }
         }
         .csvImporter(isPresented: $showImporter, sessions: $sessions)
     }
