@@ -22,7 +22,7 @@ struct Session: Identifiable {
 
     init?(csv: String) {
         let fields = csv.components(separatedBy: ",")
-        guard fields.count == 3,
+        guard fields.count == 6,
             let started = Self.formatter.date(from: fields[1]),
             let completed = Self.formatter.date(from: fields[2])
         else { return nil }
